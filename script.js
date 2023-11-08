@@ -1,7 +1,13 @@
 function createSquareDiv() {
   const square = document.createElement("div");
   square.classList.add("square");
+  square.addEventListener("mouseenter", paintSquare);
   return square;
+}
+
+function paintSquare(event) {
+  const targetSquare = event.target;
+  targetSquare.classList.add("painted");
 }
 
 function createGrid(height, width) {

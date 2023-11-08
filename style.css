@@ -14,7 +14,7 @@ html {
 }
 
 body {
-  background-color: #111;
+  background-color: #666;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,7 +32,12 @@ body {
 
 .square {
   background-color: #eee;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   height: var(--square-size);
   width: var(--square-size);
+}
+
+.painted {
+  background-color: #222;
+  border: 0;
 }
