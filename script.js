@@ -14,6 +14,9 @@ function createGrid(squaresPerSide = 16) {
 
   const grid = document.createElement("div");
   grid.className = "grid";
+  grid.addEventListener("mouseover", function paintSquare(event) {
+    event.target.classList.add("painted");
+  });
   container.appendChild(grid);
 
   for (let i = 0, totalSquares = squaresPerSide ** 2; i < totalSquares; i++) {
@@ -25,7 +28,6 @@ function createGrid(squaresPerSide = 16) {
     const square = document.createElement("div");
     square.className = "square";
     setSquareSize(squaresPerSide);
-    square.addEventListener("mouseenter", paintSquare);
     return square;
 
     function setSquareSize(squaresPerSide) {
@@ -39,10 +41,6 @@ function createGrid(squaresPerSide = 16) {
       const newSquareSize = 640 / squaresPerSide;
       targetrule.style.height = `${newSquareSize}px`;
       targetrule.style.width = `${newSquareSize}px`;
-    }
-
-    function paintSquare(event) {
-      event.target.classList.add("painted");
     }
   }
 }
