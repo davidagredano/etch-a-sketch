@@ -1,21 +1,63 @@
-function createSquareDiv() {
-  const square = document.createElement("div");
-  square.classList.add("square");
-  square.addEventListener("mouseenter", paintSquare);
-  return square;
+main();
+
+function main() {
+  createGrid();
+  addButtonFunctionality();
 }
 
-function paintSquare(event) {
-  const targetSquare = event.target;
-  targetSquare.classList.add("painted");
-}
-
-function createGrid(height, width) {
+function createGrid(squaresPerSide = 16) {
   const container = document.querySelector(".container");
-  for (let i = 0, totalSquares = height * width; i < totalSquares; i++) {
-    const square = createSquareDiv();
-    container.appendChild(square);
+
+  const gridExists = Boolean(container.children.length);
+  const existingGrid = container.firstElementChild;
+  if (gridExists) container.removeChild(existingGrid);
+
+  const grid = document.createElement("div");
+  grid.className = "grid";
+  container.appendChild(grid);
+
+  for (let i = 0, totalSquares = squaresPerSide ** 2; i < totalSquares; i++) {
+    const square = createSquareDiv(squaresPerSide);
+    grid.appendChild(square);
+  }
+
+  function createSquareDiv(squaresPerSide) {
+    const square = document.createElement("div");
+    square.className = "square";
+    setSquareSize(squaresPerSide);
+    square.addEventListener("mouseenter", paintSquare);
+    return square;
+
+    function setSquareSize(squaresPerSide) {
+      var cssRules = document.styleSheets[0].cssRules;
+      for (i = 0; i < cssRules.length; i++) {
+        if (cssRules[i].selectorText == ".square") {
+          targetrule = cssRules[i];
+          break;
+        }
+      }
+      const newSquareSize = 640 / squaresPerSide;
+      targetrule.style.height = `${newSquareSize}px`;
+      targetrule.style.width = `${newSquareSize}px`;
+    }
+
+    function paintSquare(event) {
+      event.target.classList.add("painted");
+    }
   }
 }
 
-createGrid(16, 16);
+function addButtonFunctionality() {
+  const inputSquaresBtn = document.querySelector(".input-squares-btn");
+  inputSquaresBtn.addEventListener("click", () =>
+    createGrid(setSquaresByPrompt())
+  );
+
+  function setSquaresByPrompt() {
+    const answer = prompt("Set number of squares per side: (16-64)", 16);
+    if (!Number.isNaN(answer) && answer >= 16 && answer <= 64) {
+      return answer;
+    }
+    return undefined;
+  }
+}
