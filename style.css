@@ -33,5 +33,5 @@ body {
 }
 
 .square {
-  background-color: #eee;
+  /* background-color: #eee; no longer necessary since added in JS */
 }

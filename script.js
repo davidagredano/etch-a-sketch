@@ -2,6 +2,7 @@
 const DEFAULTSQUARESPERSIDE = 32;
 const DEFAULTPAINTMODE = paintBlack;
 
+// State
 let currentPaintMode = DEFAULTPAINTMODE;
 
 main();
@@ -10,6 +11,7 @@ function main() {
   createGrid();
   setSquaresByPromptButton();
   setPaintModeButton(".black-mode-btn", paintBlack);
+  setPaintModeButton(".low-opacity-mode-btn", paintLowOpacity);
   setPaintModeButton(".rainbow-mode-btn", paintRainbow);
   setFillRainbowButton();
 }
@@ -35,6 +37,7 @@ function createGrid(squaresPerSide = DEFAULTSQUARESPERSIDE) {
   function createSquareDiv(squaresPerSide) {
     const square = document.createElement("div");
     square.className = "square";
+    square.style.backgroundColor = "#eee";
     setSquareSize(squaresPerSide);
     return square;
 
@@ -102,6 +105,14 @@ function setFillRainbowButton() {
 
 function paintBlack(event) {
   event.target.style.backgroundColor = "#222";
+}
+
+function paintLowOpacity(event) {
+  const currBGCString = event.target.style.backgroundColor;
+  const currBGCArray = currBGCString.match(/\d+/g).map(Number);
+  const newBGCArray = currBGCArray.map((elem) => Math.max(0, elem - 26));
+  const newBGCString = `rgb(${newBGCArray.toString()})`;
+  event.target.style.backgroundColor = newBGCString;
 }
 
 function paintRainbow(event) {
