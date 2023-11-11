@@ -1,14 +1,17 @@
 // Settings
 const DEFAULTSQUARESPERSIDE = 32;
+const DEFAULTPAINTMODE = paintBlack;
+
+let currentPaintMode = DEFAULTPAINTMODE;
 
 main();
 
 function main() {
   createGrid();
-  setSquaresByPromptBtn();
-  setBlackModeBtn();
-  setRainbowModeBtn();
-  setFillRainbowBtn();
+  setSquaresByPromptButton();
+  setBlackModeButton();
+  setRainbowModeButton();
+  setFillRainbowButton();
 }
 
 function createGrid(squaresPerSide = DEFAULTSQUARESPERSIDE) {
@@ -20,7 +23,7 @@ function createGrid(squaresPerSide = DEFAULTSQUARESPERSIDE) {
 
   const grid = document.createElement("div");
   grid.className = "grid";
-  grid.addEventListener("mouseover", paintBlack);
+  grid.addEventListener("mouseover", currentPaintMode);
 
   container.appendChild(grid);
 
@@ -50,7 +53,7 @@ function createGrid(squaresPerSide = DEFAULTSQUARESPERSIDE) {
   }
 }
 
-function setSquaresByPromptBtn() {
+function setSquaresByPromptButton() {
   const inputSquaresBtn = document.querySelector(".input-squares-btn");
 
   function getSquaresByPrompt() {
@@ -69,31 +72,24 @@ function setSquaresByPromptBtn() {
   );
 }
 
-function setRainbowModeBtn() {
+function setPaintMode(newPaintMode) {
+  const gridElement = document.querySelector(".grid");
+  gridElement.removeEventListener("mouseover", currentPaintMode);
+  gridElement.addEventListener("mouseover", newPaintMode);
+  currentPaintMode = newPaintMode;
+}
+
+function setRainbowModeButton() {
   const rainbowBtn = document.querySelector(".rainbow-mode-btn");
-
-  const enableRainbowMode = () => {
-    const gridElement = document.querySelector(".grid");
-    gridElement.removeEventListener("mouseover", paintBlack);
-    gridElement.addEventListener("mouseover", paintRainbow);
-  };
-
-  rainbowBtn.addEventListener("click", enableRainbowMode);
+  rainbowBtn.addEventListener("click", () => setPaintMode(paintRainbow));
 }
 
-function setBlackModeBtn() {
+function setBlackModeButton() {
   const blackBtn = document.querySelector(".black-mode-btn");
-
-  function enableBlackMode() {
-    const gridElement = document.querySelector(".grid");
-    gridElement.removeEventListener("mouseover", paintRainbow);
-    gridElement.addEventListener("mouseover", paintBlack);
-  }
-
-  blackBtn.addEventListener("click", enableBlackMode);
+  blackBtn.addEventListener("click", () => setPaintMode(paintBlack));
 }
 
-function setFillRainbowBtn() {
+function setFillRainbowButton() {
   const fillRainbowBtn = document.querySelector(".fill-rainbow-btn");
 
   function fillRainbow() {
