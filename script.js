@@ -9,8 +9,8 @@ main();
 function main() {
   createGrid();
   setSquaresByPromptButton();
-  setBlackModeButton();
-  setRainbowModeButton();
+  setPaintModeButton(".black-mode-btn", paintBlack);
+  setPaintModeButton(".rainbow-mode-btn", paintRainbow);
   setFillRainbowButton();
 }
 
@@ -79,14 +79,9 @@ function setPaintMode(newPaintMode) {
   currentPaintMode = newPaintMode;
 }
 
-function setRainbowModeButton() {
-  const rainbowBtn = document.querySelector(".rainbow-mode-btn");
-  rainbowBtn.addEventListener("click", () => setPaintMode(paintRainbow));
-}
-
-function setBlackModeButton() {
-  const blackBtn = document.querySelector(".black-mode-btn");
-  blackBtn.addEventListener("click", () => setPaintMode(paintBlack));
+function setPaintModeButton(selector, newPaintMode) {
+  const button = document.querySelector(selector);
+  button.addEventListener("click", () => setPaintMode(newPaintMode));
 }
 
 function setFillRainbowButton() {
