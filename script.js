@@ -1,3 +1,6 @@
+// Settings
+const DEFAULTSQUARESPERSIDE = 32;
+
 main();
 
 function main() {
@@ -7,7 +10,7 @@ function main() {
   setRainbowModeBtn();
 }
 
-function createGrid(squaresPerSide = 16) {
+function createGrid(squaresPerSide = DEFAULTSQUARESPERSIDE) {
   const container = document.querySelector(".container");
 
   const gridExists = Boolean(container.children.length);
@@ -50,7 +53,10 @@ function setSquaresByPromptBtn() {
   const inputSquaresBtn = document.querySelector(".input-squares-btn");
 
   function getSquaresByPrompt() {
-    const answer = prompt("Set number of squares per side: (16-64)", 16);
+    const answer = prompt(
+      "Set number of squares per side: (16-64)",
+      DEFAULTSQUARESPERSIDE
+    );
     if (!Number.isNaN(answer) && answer >= 16 && answer <= 64) {
       return answer;
     }
