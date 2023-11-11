@@ -8,6 +8,7 @@ function main() {
   setSquaresByPromptBtn();
   setBlackModeBtn();
   setRainbowModeBtn();
+  setFillRainbowBtn();
 }
 
 function createGrid(squaresPerSide = DEFAULTSQUARESPERSIDE) {
@@ -90,6 +91,22 @@ function setBlackModeBtn() {
   }
 
   blackBtn.addEventListener("click", enableBlackMode);
+}
+
+function setFillRainbowBtn() {
+  const fillRainbowBtn = document.querySelector(".fill-rainbow-btn");
+
+  function fillRainbow() {
+    const gridElement = document.querySelector(".grid");
+    const gridChildren = gridElement.children;
+
+    for (let i = 0; i < gridChildren.length; i++) {
+      const child = gridChildren[i];
+      child.style.backgroundColor = getRandomRGB();
+    }
+  }
+
+  fillRainbowBtn.addEventListener("click", fillRainbow);
 }
 
 function paintBlack(event) {
