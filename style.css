@@ -34,10 +34,4 @@ body {
 
 .square {
   background-color: #eee;
-  border: 1px solid #ddd;
-}
-
-.painted {
-  background-color: #222;
-  border: 0;
 }

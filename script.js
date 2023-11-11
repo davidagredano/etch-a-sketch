@@ -2,7 +2,9 @@ main();
 
 function main() {
   createGrid();
-  addButtonFunctionality();
+  setSquaresByPromptBtn();
+  setBlackModeBtn();
+  setRainbowModeBtn();
 }
 
 function createGrid(squaresPerSide = 16) {
@@ -14,9 +16,8 @@ function createGrid(squaresPerSide = 16) {
 
   const grid = document.createElement("div");
   grid.className = "grid";
-  grid.addEventListener("mouseover", function paintSquare(event) {
-    event.target.classList.add("painted");
-  });
+  grid.addEventListener("mouseover", paintBlack);
+
   container.appendChild(grid);
 
   for (let i = 0, totalSquares = squaresPerSide ** 2; i < totalSquares; i++) {
@@ -45,17 +46,58 @@ function createGrid(squaresPerSide = 16) {
   }
 }
 
-function addButtonFunctionality() {
+function setSquaresByPromptBtn() {
   const inputSquaresBtn = document.querySelector(".input-squares-btn");
-  inputSquaresBtn.addEventListener("click", () =>
-    createGrid(setSquaresByPrompt())
-  );
 
-  function setSquaresByPrompt() {
+  function getSquaresByPrompt() {
     const answer = prompt("Set number of squares per side: (16-64)", 16);
     if (!Number.isNaN(answer) && answer >= 16 && answer <= 64) {
       return answer;
     }
     return undefined;
   }
+
+  inputSquaresBtn.addEventListener("click", () =>
+    createGrid(getSquaresByPrompt())
+  );
+}
+
+function setRainbowModeBtn() {
+  const rainbowBtn = document.querySelector(".rainbow-mode-btn");
+
+  const enableRainbowMode = () => {
+    const gridElement = document.querySelector(".grid");
+    gridElement.removeEventListener("mouseover", paintBlack);
+    gridElement.addEventListener("mouseover", paintRainbow);
+  };
+
+  rainbowBtn.addEventListener("click", enableRainbowMode);
+}
+
+function setBlackModeBtn() {
+  const blackBtn = document.querySelector(".black-mode-btn");
+
+  function enableBlackMode() {
+    const gridElement = document.querySelector(".grid");
+    gridElement.removeEventListener("mouseover", paintRainbow);
+    gridElement.addEventListener("mouseover", paintBlack);
+  }
+
+  blackBtn.addEventListener("click", enableBlackMode);
+}
+
+function paintBlack(event) {
+  event.target.style.backgroundColor = "#222";
+}
+
+function paintRainbow(event) {
+  event.target.style.backgroundColor = getRandomRGB();
+}
+
+function getRandomRGB() {
+  const getRandomRgbValue = () => Math.floor(Math.random() * 256);
+  const r = getRandomRgbValue();
+  const g = getRandomRgbValue();
+  const b = getRandomRgbValue();
+  return `rgb(${r}, ${g}, ${b})`;
 }
